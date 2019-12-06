@@ -1,9 +1,7 @@
 package com.example.cities.di
 
 import com.example.cities.BuildConfig
-import com.example.cities.data.CountryAPI
-import com.example.cities.data.CountryDataSource
-import com.example.cities.data.CountryRepository
+import com.example.cities.data.*
 import com.example.cities.vm.HomeViewModel
 import okhttp3.OkHttpClient
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -18,6 +16,12 @@ val apiModule = module {
 
 val repositoryModule = module {
     single<CountryDataSource> { CountryRepository(get()) }
+}
+
+val dtoMapperModule = module {
+    single { CityMapper() }
+    single { CityListMapper(get()) }
+    single { CountryMapper(get()) }
 }
 
 val viewModelModule = module {

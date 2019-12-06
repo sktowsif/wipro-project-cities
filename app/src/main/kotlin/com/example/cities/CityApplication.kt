@@ -2,6 +2,7 @@ package com.example.cities
 
 import android.app.Application
 import com.example.cities.di.apiModule
+import com.example.cities.di.dtoMapperModule
 import com.example.cities.di.repositoryModule
 import com.example.cities.di.viewModelModule
 import org.koin.android.ext.koin.androidContext
@@ -16,7 +17,7 @@ class CityApplication : Application() {
         startKoin {
             androidLogger()
             androidContext(this@CityApplication)
-            modules(listOf(apiModule, repositoryModule, viewModelModule))
+            modules(listOf(apiModule, dtoMapperModule, repositoryModule, viewModelModule))
         }
     }
 

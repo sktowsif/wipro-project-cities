@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.example.cities.R
 import com.example.cities.base.Outcome
-import com.example.cities.data.EntityCountry
+import com.example.cities.data.Country
 import com.example.cities.ext.reObserve
 import com.example.cities.vm.HomeViewModel
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -23,7 +23,7 @@ class HomeFragment : Fragment() {
 
     private val viewModel by sharedViewModel<HomeViewModel>()
 
-    private val countryObserver = Observer<Outcome<EntityCountry>> {
+    private val countryObserver = Observer<Outcome<Country>> {
         when (it) {
             is Outcome.Progress -> swipeRefresh.isRefreshing = it.loading
             is Outcome.Failure -> toast(it.e.localizedMessage ?: "Something went wrong")
