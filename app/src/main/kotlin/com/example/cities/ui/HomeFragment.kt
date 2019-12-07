@@ -27,7 +27,6 @@ import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_home.view.*
 import kotlinx.android.synthetic.main.item_city.view.*
 import org.jetbrains.anko.dimen
-import org.jetbrains.anko.support.v4.toast
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
