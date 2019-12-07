@@ -67,8 +67,6 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
         super.onCreate(savedInstanceState)
         viewModel.connectivityLiveData.reObserve(this, internetConnectivityObserver)
         viewModel.countryLiveData.reObserve(this, countryObserver)
-
-        onRefresh()
     }
 
     override fun onCreateView(

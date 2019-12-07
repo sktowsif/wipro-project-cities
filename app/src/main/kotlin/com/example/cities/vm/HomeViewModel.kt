@@ -18,6 +18,10 @@ class HomeViewModel(application: Application, private val dataSource: CountryDat
 
     val connectivityLiveData = ConnectivityLiveData(application)
 
+    init {
+        fetchData()
+    }
+
     val countryLiveData = fetchCountryData.switchMap {
         liveData<Outcome<Country>>(context = viewModelScope.coroutineContext + Dispatchers.IO) {
             emitLoading()

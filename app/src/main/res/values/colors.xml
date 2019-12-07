@@ -6,4 +6,6 @@
 
     <color name="statusBarColor">#FFFFFF</color>
     <color name="navBarColor">#FFFFFF</color>
+
+    <color name="lightGray">#e4e4e4</color>
 </resources>
