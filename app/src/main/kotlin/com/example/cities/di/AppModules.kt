@@ -25,7 +25,7 @@ val dtoMapperModule = module {
 }
 
 val viewModelModule = module {
-    viewModel { HomeViewModel(get()) }
+    viewModel { HomeViewModel(get(), get()) }
 }
 
 inline fun <reified T> createWebService(url: String): T {

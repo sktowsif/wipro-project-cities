@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Cities</string>
+
+    <string name="action_retry">Retry</string>
+
+    <string name="err_something_wrong">Something went wrong</string>
+    <string name="err_no_internet">No Internet Connection</string>
+    <string name="err_no_data">No data available</string>
 </resources>
