@@ -1,12 +1,11 @@
 package com.example.cities.ui
 
-import android.os.Build
 import android.os.Bundle
-import android.text.Html
+import android.text.SpannableString
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isGone
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,8 +20,10 @@ import com.example.cities.ext.gone
 import com.example.cities.ext.reObserve
 import com.example.cities.ext.show
 import com.example.cities.vm.HomeViewModel
+import com.example.cities.widget.LeadingSpan
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.item_city.view.*
+import org.jetbrains.anko.dimen
 import org.jetbrains.anko.support.v4.toast
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
@@ -57,6 +58,7 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        swipeRefresh.setOnRefreshListener(this)
 
         cityList.apply {
             setHasFixedSize(false)
@@ -101,15 +103,18 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
             fun bindCity(city: City) {
                 itemView.title.text = city.title
                 itemView.description.text = city.desc
-                val text = "<html>${city.desc}</html>"
-                itemView.description.text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-                    Html.fromHtml(text, Html.FROM_HTML_MODE_LEGACY)
-                else Html.fromHtml(text)
 
-                if (city.imageUrl.isNullOrEmpty()) itemView.imgPhoto.gone()
-                else {
+                if (city.imageUrl.isNullOrEmpty()) {
+                    itemView.imgPhoto.gone()
+                    itemView.description.text = city.desc
+                } else {
                     itemView.imgPhoto.show()
                     itemView.imgPhoto.load(city.imageUrl)
+                    val imageFrameSize = itemView.context.dimen(R.dimen._80sdp)
+                    val leftMargin = imageFrameSize + 20
+                    val spannedText = SpannableString(city.desc)
+                    spannedText.setSpan(LeadingSpan(4, leftMargin), 0, spannedText.length, 0)
+                    itemView.description.setText(spannedText, TextView.BufferType.SPANNABLE)
                 }
             }
         }
