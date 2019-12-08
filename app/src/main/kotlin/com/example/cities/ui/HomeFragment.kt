@@ -27,6 +27,7 @@ import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_home.view.*
 import kotlinx.android.synthetic.main.item_city.view.*
 import org.jetbrains.anko.dimen
+import org.jetbrains.anko.toast
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
@@ -153,6 +154,8 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
                 val spannedText = SpannableString(city.desc)
                 spannedText.setSpan(LeadingSpan(4, leftMargin), 0, spannedText.length, 0)
                 itemView.description.setText(spannedText, TextView.BufferType.SPANNABLE)
+
+                itemView.setOnClickListener { itemView.context.toast(city.title) }
             }
         }
 
