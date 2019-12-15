@@ -1,6 +1,6 @@
 package com.example.cities.support
 
-import android.app.Application
+import android.content.Context
 import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkRequest
@@ -15,7 +15,7 @@ import org.jetbrains.anko.connectivityManager
 class ConnectivityLiveData(private val connectivityManager: ConnectivityManager) :
     LiveData<Boolean>() {
 
-    constructor(application: Application) : this(application.connectivityManager)
+    constructor(context: Context) : this(context.connectivityManager)
 
     private val networkCallback = object : ConnectivityManager.NetworkCallback() {
         override fun onAvailable(network: Network) {

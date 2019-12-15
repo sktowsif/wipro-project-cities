@@ -10,6 +10,11 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
+val testModules = module {
+    single<CountryAPI> { createWebService(BuildConfig.BASE_API_URL) }
+    single<CountryDataSource> { CountryRepository(get()) }
+}
+
 val apiModule = module {
     single<CountryAPI> { createWebService(BuildConfig.BASE_API_URL) }
 }

@@ -1,6 +1,6 @@
 package com.example.cities.vm
 
-import android.app.Application
+import android.content.Context
 import androidx.lifecycle.*
 import com.example.cities.base.Outcome
 import com.example.cities.data.Country
@@ -11,12 +11,12 @@ import com.example.cities.ext.emitSuccess
 import com.example.cities.support.ConnectivityLiveData
 import kotlinx.coroutines.Dispatchers
 
-class HomeViewModel(application: Application, private val dataSource: CountryDataSource) :
+class HomeViewModel(context: Context, private val dataSource: CountryDataSource) :
     ViewModel() {
 
     private val fetchCountryData = MutableLiveData<Boolean>()
 
-    val connectivityLiveData = ConnectivityLiveData(application)
+    val connectivityLiveData = ConnectivityLiveData(context)
 
     init {
         fetchData()
@@ -37,6 +37,4 @@ class HomeViewModel(application: Application, private val dataSource: CountryDat
     fun fetchData() {
         fetchCountryData.value = true
     }
-
-
 }
