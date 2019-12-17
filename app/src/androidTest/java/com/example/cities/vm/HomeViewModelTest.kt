@@ -9,12 +9,10 @@ import com.example.cities.data.Country
 import com.example.cities.data.CountryDataSource
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.timeout
-import com.nhaarman.mockitokotlin2.times
 import com.nhaarman.mockitokotlin2.verify
 import kotlinx.coroutines.*
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
-import okio.IOException
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -32,13 +30,10 @@ class HomeViewModelTest {
     private lateinit var repository: CountryDataSource
     private lateinit var dataObserver: Observer<Outcome<Country>>
 
-    private val errorOutcome = Outcome.failure<Throwable>(IOException("Network connection failure"))
-
     @Rule
     @JvmField
     val instantExecutorRule = InstantTaskExecutorRule()
 
-    @ObsoleteCoroutinesApi
     private val mainThreadSurrogate = newSingleThreadContext("UI thread")
 
     @Before
