@@ -11,7 +11,9 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import coil.Coil
 import coil.api.load
+import coil.request.CachePolicy
 import com.example.cities.R
 import com.example.cities.base.Outcome
 import com.example.cities.data.City
@@ -26,8 +28,7 @@ import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_home.view.*
 import kotlinx.android.synthetic.main.item_city.view.*
-import org.jetbrains.anko.dimen
-import org.jetbrains.anko.toast
+import org.jetbrains.anko.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
@@ -136,18 +137,23 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
         override fun getItemCount(): Int = cities.size
 
-        class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
+        class ViewHolder(v: View) : RecyclerView.ViewHolder(v), AnkoLogger {
 
             fun bindCity(city: City) {
                 itemView.title.text = city.title
                 itemView.description.text = city.desc
 
-                if (!city.imageUrl.isNullOrEmpty()) {
-                    itemView.imgPhoto.load(city.imageUrl) {
-                        placeholder(R.drawable.img_placeholder)
-                        error(R.drawable.img_placeholder)
-                    }
-                } else itemView.imgPhoto.setImageResource(R.drawable.img_placeholder)
+
+                if (city.imageUrl.isNullOrEmpty()) itemView.imgPhoto
+                    .setImageDrawable(itemView.context.getDrawable(R.drawable.img_placeholder))
+                else Coil.load(itemView.context, city.imageUrl) {
+                    target(
+                        onSuccess = { itemView.imgPhoto.setImageDrawable(it) },
+                        onError = {
+                            itemView.imgPhoto
+                                .setImageDrawable(itemView.context.getDrawable(R.drawable.img_placeholder))
+                        })
+                }
 
                 val imageFrameSize = itemView.context.dimen(R.dimen._80sdp)
                 val leftMargin = imageFrameSize + 20
