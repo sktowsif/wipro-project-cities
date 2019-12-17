@@ -9,8 +9,8 @@ import com.example.cities.data.Country
 import com.example.cities.data.CountryDataSource
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.timeout
+import com.nhaarman.mockitokotlin2.times
 import com.nhaarman.mockitokotlin2.verify
-import com.nhaarman.mockitokotlin2.whenever
 import kotlinx.coroutines.*
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
@@ -22,7 +22,6 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.mockito.Mockito.`when`
-import org.mockito.Mockito.mock
 
 @ObsoleteCoroutinesApi
 @ExperimentalCoroutinesApi
@@ -64,23 +63,23 @@ class HomeViewModelTest {
             viewModel.countryLiveData.observeForever(dataObserver)
             viewModel.fetchData()
 
-            delay(10L)
-            verify(dataObserver, timeout(30L)).onChanged(Outcome.success(expectedResponse))
+            delay(500L)
+            verify(dataObserver, timeout(30000L)).onChanged(Outcome.success(expectedResponse))
         }
     }
 
     @Test
     fun testApiCallFailure() {
         runBlocking {
-            val expectedResponse = java.io.IOException("Unknown host")
+            val expectedResponse = NullPointerException("Title not provided")
 
             `when`(repository.getData()).thenThrow(expectedResponse)
 
             viewModel.countryLiveData.observeForever(dataObserver)
             viewModel.fetchData()
 
-            delay(10L)
-            verify(dataObserver, timeout(30L)).onChanged(Outcome.failure(expectedResponse))
+            delay(500L)
+            verify(dataObserver, timeout(30000L)).onChanged(Outcome.failure(expectedResponse))
         }
     }
 
